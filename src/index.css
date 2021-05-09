@@ -12,8 +12,39 @@ code {
     monospace;
 }
 
+.container {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
 .goods {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  margin: 20px 40px 0;
+}
+
+.cart {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.7rem;
+  cursor: pointer;
+  z-index: 5;
+  padding: 0.9rem;
+  border-radius: 50%;
+  background-color: #5367db;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@media (min-width: 767px) {
+  .cart {
+    top: 5rem;
+    bottom: unset;
+  }
+}
+
+.cart-quantity {
+
 }
