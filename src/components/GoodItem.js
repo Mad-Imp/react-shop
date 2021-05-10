@@ -16,8 +16,8 @@ const useStyles = makeStyles({
         margin: '20px 8px',
     },
     media: {
-        height: 270,
-        width: 270
+        height: 290,
+        width: 300
     },
     price: {
         display: 'block',
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
         fontSize: '1.15rem'
     },
     title: {
-        fontSize: '1.3rem'
+        fontSize: '1.2rem'
     },
     btn: {
         paddingLeft: 15,
@@ -39,7 +39,14 @@ const useStyles = makeStyles({
     }
 });
 
-export default function GoodItem({id, name, description, price, full_background, addToCart = Function.prototype}) {
+export default function GoodItem({
+                                     id,
+                                     name,
+                                     description,
+                                     price,
+                                     full_background,
+                                     addToCart = Function.prototype,
+                                 }) {
     const classes = useStyles();
 
     return (
@@ -74,7 +81,7 @@ export default function GoodItem({id, name, description, price, full_background,
                             gutterBottom
                             variant="h6"
                             component="h3">
-                    {`${price} руб.`}
+                    {`${price} В-баксов`}
                 </Typography>
             </CardActions>
         </Card>

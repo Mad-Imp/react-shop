@@ -3,12 +3,15 @@ import {API_KEY, API_URL} from '../config';
 import LinearBuffer from "./LinearBuffer";
 import GoodsList from "./GoodsList";
 import Cart from "./Cart";
+import CartList from "./CartList";
+import AlertMessage from "./AlertMessage";
 
 function Shop() {
     const [goods, setGoods] = useState([]);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState([]);
     const [isCartShow, setCartShow] = useState(false);
+    const [alertName, setAlertName] = useState('');
 
     const addToCart = item => {
         const itemIndex = order.findIndex(orderItem => orderItem.id === item.id);//проверяем, был ли ранее добавлен товар
@@ -32,10 +35,50 @@ function Shop() {
             })
             setOrder(newOrder); //меняем state заказа
         }
+        setAlertName(item.name);
+    }
+
+    const removeFromCart = itemId => {
+        const newOrder = order.filter(el => el.id !== itemId);
+        setOrder(newOrder);
+    }
+
+    const increaseQuantity = itemId => {
+        const newOrder = order.map(el => {
+            if(el.id === itemId) {
+                const newQuantity = el.quantity + 1;
+                return {
+                    ...el,
+                    quantity: newQuantity
+                }
+            } else {
+                return el;
+            }
+        });
+        setOrder(newOrder);
+    }
+
+    const decreaseQuantity = itemId => {
+        const newOrder = order.map(el => {
+            if(el.id === itemId) {
+                const newQuantity = el.quantity - 1;
+                return {
+                    ...el,
+                    quantity: newQuantity >= 1 ? newQuantity : 1,
+                }
+            } else {
+                return el;
+            }
+        });
+        setOrder(newOrder);
     }
 
     const handleCartShow = () => {
         setCartShow(!isCartShow);
+    }
+
+    const closeAlert = () => {
+        setAlertName('');
     }
 
     useEffect(function getGoods() {
@@ -54,6 +97,13 @@ function Shop() {
     return <main className='container content'>
         <Cart quantity={order.length} handleCartShow={handleCartShow}/>
         {loading ? <LinearBuffer/> : <GoodsList goods={goods} addToCart={addToCart}/>}
+        {isCartShow && <CartList order={order}
+                                 handleCartShow={handleCartShow}
+                                 removeFromCart={removeFromCart}
+                                 increaseQuantity={increaseQuantity}
+                                 decreaseQuantity={decreaseQuantity}/>
+        }
+        { alertName && <AlertMessage name={alertName} closeAlert={closeAlert}/> }
     </main>
 }
 

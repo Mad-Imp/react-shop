@@ -45,6 +45,15 @@ code {
   }
 }
 
-.cart-quantity {
-
+@keyframes show {
+  from {
+    top: 20%;
+    left: 80%;
+    opacity: 0;
+  }
+  to {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+  }
 }

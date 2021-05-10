@@ -1,63 +1,90 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import CartItem from "./CartItem";
+import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Button from "@material-ui/core/Button";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        maxWidth: 752,
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
+        width: '35rem',
+        maxWidth: '85%',
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        padding: 20,
+        boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)',
+        animation: 'show 500ms ease-in-out',
+
+    },
+    container: {
+        maxWidth: '100%',
     },
     demo: {
         backgroundColor: theme.palette.background.paper,
+
     },
     title: {
-        margin: theme.spacing(4, 0, 2),
+        margin: theme.spacing(1, 0, 1),
+        color: '#292929'
+    },
+    close: {
+        cursor: 'pointer',
+        position: 'absolute',
+        top: '1rem',
+        right: '1rem',
     },
 }));
 
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
-}
-
-export default function CartList() {
+export default function CartList(props) {
     const classes = useStyles();
+    const {
+        order = [],
+        handleCartShow = Function.prototype,
+        removeFromCart = Function.prototype,
+        increaseQuantity = Function.prototype,
+        decreaseQuantity = Function.prototype,
+    } = props;
+
+    const totalPrice = order.reduce((sum, el) => {
+        return sum + el.price * el.quantity
+    }, 0);
 
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                    <Typography variant="h6" className={classes.title}>
-                        Корзина
-                    </Typography>
+                <Grid item xs={12} md={12}>
+                    <Typography variant="h6" className={classes.title}>Корзина</Typography>
                     <div className={classes.demo}>
                         <List>
-                            {generate(
-                                <ListItem>
-                                    <ListItemText
-                                        primary="Single-line item"
-                                    />
-                                    <ListItemSecondaryAction>
-                                        <IconButton edge="end" aria-label="delete">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </ListItemSecondaryAction>
-                                </ListItem>,
-                            )}
+                            {order.length ? order.map(item => (
+                                <CartItem key={item.id}
+                                          {...item}
+                                          removeFromCart={removeFromCart}
+                                          increaseQuantity={increaseQuantity}
+                                          decreaseQuantity={decreaseQuantity}/>
+                            )) : <Typography variant="h6" className={classes.title}>Корзина пуста</Typography>
+                            }
                         </List>
                     </div>
+                    <Typography variant="h6" className={classes.title}>Общая стоимость: {totalPrice} В-баксов</Typography>
+                    <Button
+                        size="medium"
+                        color="primary">
+                        Купить
+                    </Button>
+
+                    <CloseIcon className={classes.close} onClick={handleCartShow}/>
                 </Grid>
             </Grid>
         </div>
     );
 }
+
