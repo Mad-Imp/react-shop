@@ -6,8 +6,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '32%',
         position: 'fixed',
-        top: '10%',
+        top: '12%',
         right: '10%',
+        animation: 'fade-in 250ms ease-in-out'
     },
     text: {
         padding: 2,
