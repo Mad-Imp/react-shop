@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         maxWidth: '32%',
         position: 'fixed',

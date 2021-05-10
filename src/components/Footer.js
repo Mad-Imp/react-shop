@@ -32,7 +32,7 @@ export default function Footer() {
                     <Typography variant="h6" className={classes.title}>
                         React Shop
                     </Typography>
-                    <a className={classes.repo} href="#" color="inherit" >Репозиторий</a>
+                    <a className={classes.repo} href="https://github.com/Mad-Imp/react-shop" target="_blank" rel="noreferrer" color="inherit" >Репозиторий</a>
                 </Toolbar>
             </AppBar>
         </div>
