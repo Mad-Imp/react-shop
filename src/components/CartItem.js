@@ -7,7 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-
+import {useContext} from "react";
+import {ShopContext} from "../context";
 
 const useStyles = makeStyles((theme) => ({
     item: {
@@ -35,15 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function CartItem({
-                      id,
-                      name,
-                      price,
-                      quantity,
-                      removeFromCart = Function.prototype,
-                      increaseQuantity = Function.prototype,
-                      decreaseQuantity = Function.prototype
-                  }) {
+function CartItem({id, name, price, quantity}) {
+    const {removeFromCart, increaseQuantity, decreaseQuantity} = useContext(ShopContext);
     const classes = useStyles();
     return (
         <ListItem className={classes.item}>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {ShopContext} from "../context";
 import CloseIcon from '@material-ui/icons/Close';
 import CartItem from "./CartItem";
 import {makeStyles} from '@material-ui/core/styles';
@@ -6,7 +7,6 @@ import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,16 +17,19 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translate(-50%,-50%)',
         width: '35rem',
         maxWidth: '85%',
+        maxHeight: '35rem',
         backgroundColor: '#ffffff',
         borderRadius: 10,
         padding: 20,
         boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)',
         animation: 'show 500ms ease-in-out',
+        overflowY: 'auto'
 
     },
     container: {
         maxWidth: '100%',
     },
+
     demo: {
         backgroundColor: theme.palette.background.paper,
 
@@ -43,15 +46,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CartList(props) {
+export default function CartList() {
     const classes = useStyles();
-    const {
-        order = [],
-        handleCartShow = Function.prototype,
-        removeFromCart = Function.prototype,
-        increaseQuantity = Function.prototype,
-        decreaseQuantity = Function.prototype,
-    } = props;
+    const {order, handleCartShow} = useContext(ShopContext);
 
     const totalPrice = order.reduce((sum, el) => {
         return sum + el.price * el.quantity
@@ -65,11 +62,7 @@ export default function CartList(props) {
                     <div className={classes.demo}>
                         <List>
                             {order.length ? order.map(item => (
-                                <CartItem key={item.id}
-                                          {...item}
-                                          removeFromCart={removeFromCart}
-                                          increaseQuantity={increaseQuantity}
-                                          decreaseQuantity={decreaseQuantity}/>
+                                <CartItem key={item.id} {...item}/>
                             )) : <Typography variant="h6" className={classes.title}>Корзина пуста</Typography>
                             }
                         </List>

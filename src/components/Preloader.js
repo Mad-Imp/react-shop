@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -8,13 +8,13 @@ const useStyles = makeStyles({
     },
 });
 
-export default function LinearBuffer() {
+export default function Preloader() {
     const classes = useStyles();
-    const [progress, setProgress] = React.useState(0);
-    const [buffer, setBuffer] = React.useState(10);
+    const [progress, setProgress] = useState(0);
+    const [buffer, setBuffer] = useState(10);
 
-    const progressRef = React.useRef(() => {});
-    React.useEffect(() => {
+    const progressRef = useRef(() => {});
+    useEffect(() => {
         progressRef.current = () => {
             if (progress > 100) {
                 setProgress(0);
@@ -28,7 +28,7 @@ export default function LinearBuffer() {
         };
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timer = setInterval(() => {
             progressRef.current();
         }, 500);

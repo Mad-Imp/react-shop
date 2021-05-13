@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
+import {ShopContext} from "../context";
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 
@@ -17,19 +18,21 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function AlertMessage({name = '', closeAlert = Function.prototype}) {
+export default function AlertMessage() {
     const classes = useStyles();
+    const {alertName = '', closeAlert = Function.prototype} = useContext(ShopContext);
 
     useEffect(() => {
         const timerId = setTimeout(closeAlert, 3000);
 
         return () => {clearTimeout(timerId)}
-    }, [name]);
+        //eslint-disable-next-line
+    }, [alertName]);
 
     return (
         <div className={classes.root}>
             <Alert className={classes.text} severity="success" color="info">
-                {name.toLowerCase()} добавлен в корзину.
+                {alertName.toLowerCase()} добавлен в корзину.
             </Alert>
         </div>
     );

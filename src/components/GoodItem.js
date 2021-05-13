@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {ShopContext} from "../context";
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -14,6 +15,9 @@ const useStyles = makeStyles({
         maxWidth: 300,
         maxHeight: 560,
         margin: '20px 8px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     media: {
         height: 290,
@@ -23,7 +27,7 @@ const useStyles = makeStyles({
         display: 'block',
         marginRight: 10,
         color: '#3f51b5',
-        fontSize: '1.15rem'
+        fontSize: '1.15rem',
     },
     title: {
         fontSize: '1.2rem'
@@ -35,7 +39,7 @@ const useStyles = makeStyles({
     actions: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 });
 
@@ -45,9 +49,9 @@ export default function GoodItem({
                                      description,
                                      price,
                                      full_background,
-                                     addToCart = Function.prototype,
                                  }) {
     const classes = useStyles();
+    const {addToCart} = useContext(ShopContext);
 
     return (
         <Card className={classes.root}>

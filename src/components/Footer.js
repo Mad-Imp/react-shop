@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         color: '#fff',
         textTransform: 'uppercase'
-    }
+    },
 }));
 
 export default function Footer() {
@@ -27,7 +27,7 @@ export default function Footer() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position={'static'}>
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
                         React Shop
